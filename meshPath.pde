@@ -31,7 +31,7 @@ void setup()
 
 void draw()
 {
-  background( 220 );
+  background( 22 );
   
   physics.update();
   attractor.x = mouseX;
@@ -53,15 +53,22 @@ void draw()
         Particle thatParticle = particles.get( j );
         if( dist( thisParticle.x, thisParticle.y, thatParticle.x, thatParticle.y ) < stringRadius ) 
         {
-          fill( 0, thisParticle.alpha );
+          stroke( 46, 216, 255, thisParticle.alpha );
           line( thisParticle.x, thisParticle.y, thatParticle.x, thatParticle.y );
         }
       }  
     }
   }
-  
-  for( Particle p : particles )
+
+  for( int i = 0; i < particles.size(); i++ )
   {
+   Particle p = particles.get( i );
+   if( p.isDead() )
+   {
+     particles.remove( p );
+   } else {
     p.display();
-  } 
+   }
+  }
+  
 }

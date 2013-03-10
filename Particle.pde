@@ -14,11 +14,10 @@ class Particle extends VerletParticle2D {
 
   void display() 
   {
-    fill( 175, alpha );
-    stroke( 0, alpha );
+    fill( 46, 216, 255, alpha );
     ellipse( x, y, 16, 16 );
     
-    if( lifespan > 200 )
+    if( lifespan > 150 )
     {
      alpha -= 1; 
     } else {
@@ -26,12 +25,11 @@ class Particle extends VerletParticle2D {
     }
     
     lifespan += 1; 
-    println( lifespan );
   }
   
   boolean isDead()
   {
-    if( lifespan < 0 )
+    if( lifespan > 250 )
     {
       return true;
     } else {
