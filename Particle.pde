@@ -16,7 +16,7 @@ class Particle extends VerletParticle2D {
   {
     fill( 46, 216, 255, alpha );
     ellipse( x, y, 16, 16 );
-    
+
     if( lifespan > 150 )
     {
      alpha -= 1; 

@@ -9,7 +9,6 @@ import toxi.geom.*;
 VerletPhysics2D physics;
 ArrayList<Particle> particles;
 Attractor attractor;
-
 float stringRadius = 100;
 
 void setup()
