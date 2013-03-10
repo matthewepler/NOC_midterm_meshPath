@@ -9,6 +9,8 @@ import toxi.geom.*;
 VerletPhysics2D physics;
 ArrayList<Particle> particles;
 
+float stringRadius = 100;
+
 void setup()
 {
   size( 1000, 400 );
@@ -33,30 +35,46 @@ void setup()
     xoff += 3;
   }
   
-  for( int i = particles.size() - 2; i >= 0; i-- )
+  for( int i = 0; i < particles.size() - 1; i++ )
   {
     Particle thisParticle = particles.get( i );
-    Particle nextParticle = particles.get( i + 1 );
-    VerletSpring2D spring = new VerletSpring2D( thisParticle, nextParticle, 80, 0.01 ); 
-    physics.addSpring( spring );
+    for( int j = 0; j < particles.size() - 1; j++ )
+    {
+      if( i != j)
+     {
+       Particle thatParticle = particles.get( j );
+       if( dist( thisParticle.x, thisParticle.y, thatParticle.x, thatParticle.y ) < stringRadius ) 
+       {
+         VerletSpring2D spring = new VerletSpring2D( thisParticle, thatParticle, 80, 0.01 ); 
+         physics.addSpring( spring );
+       }
+     }
+    }
   }
-  VerletSpring2D spring = new VerletSpring2D( particles.get( 0 ), particles.get( particles.size() - 1 ), 80, 0.01 );
-  physics.addSpring( spring );
 }
 
 void draw()
 {
   background( 220 );
   
-  Particle firstParticle = particles.get( 0 );
   Particle lastParticle  = particles.get( particles.size() - 1 );
   lastParticle.display();
   
-  for( int i = particles.size() - 2; i >= 0; i-- )
+  for( int i = 0; i < particles.size() - 1; i++ )
   {
     Particle thisParticle = particles.get( i );
-    Particle nextParticle = particles.get( i + 1 );
-    line( thisParticle.x, thisParticle.y, nextParticle.x, nextParticle.y );
+    for( int j = 0; j < particles.size() - 1; j++ )
+    {
+      if( i != j )
+      {
+        Particle thatParticle = particles.get( j );
+        if( dist( thisParticle.x, thisParticle.y, thatParticle.x, thatParticle.y ) < stringRadius ) 
+        {
+          line( thisParticle.x, thisParticle.y, thatParticle.x, thatParticle.y );
+        }
+      }
+      
+    }
     thisParticle.display();
   }    
 }
