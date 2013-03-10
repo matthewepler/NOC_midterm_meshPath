@@ -9,7 +9,7 @@ import toxi.geom.*;
 VerletPhysics2D physics;
 ArrayList<Particle> particles;
 
-float stringRadius = 100;
+float stringRadius = 75;
 
 void setup()
 {
@@ -35,10 +35,10 @@ void setup()
     xoff += 3;
   }
   
-  for( int i = 0; i < particles.size() - 1; i++ )
+  for( int i = 0; i < particles.size(); i++ )
   {
     Particle thisParticle = particles.get( i );
-    for( int j = 0; j < particles.size() - 1; j++ )
+    for( int j = 0; j < particles.size(); j++ )
     {
       if( i != j)
      {
@@ -57,13 +57,10 @@ void draw()
 {
   background( 220 );
   
-  Particle lastParticle  = particles.get( particles.size() - 1 );
-  lastParticle.display();
-  
-  for( int i = 0; i < particles.size() - 1; i++ )
+  for( int i = 0; i < particles.size(); i++ )
   {
     Particle thisParticle = particles.get( i );
-    for( int j = 0; j < particles.size() - 1; j++ )
+    for( int j = 0; j < particles.size(); j++ )
     {
       if( i != j )
       {
@@ -75,6 +72,10 @@ void draw()
       }
       
     }
-    thisParticle.display();
-  }    
+  }
+
+  for( Particle p : particles )
+  {
+    p.display();
+  }  
 }
