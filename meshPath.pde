@@ -8,6 +8,7 @@ import toxi.geom.*;
 
 VerletPhysics2D physics;
 ArrayList<Particle> particles;
+Attractor attractor;
 
 float stringRadius = 75;
 
@@ -20,19 +21,17 @@ void setup()
   physics.setDrag (0.01);
   
   particles = new ArrayList();
+  attractor = new Attractor( new Vec2D( width, height/2 ) );
   
   Vec2D center = new Vec2D( width/2, height/2 );
   Vec2D extent = new Vec2D( width/2, height/2 );
   
   physics.setWorldBounds( Rect.fromCenterExtent( center, extent ) );
   
-  noiseDetail( 1, 0.99 );
-  float xoff = 0.0;
   for( int i = 0; i < width; i+=25 )
   {
-    Particle p = new Particle( i, height/2 + noise( xoff ) * 150 );
+    Particle p = new Particle( i, height/2 + random( -50, 50 ) );
     particles.add( p ); 
-    xoff += 3;
   }
 }
 
@@ -41,6 +40,8 @@ void draw()
   background( 220 );
   
   physics.update();
+  attractor.x = mouseX;
+  attractor.y = mouseY;
   
   for( int i = 0; i < particles.size(); i++ )
   {
@@ -57,12 +58,9 @@ void draw()
       }  
     }
   }
-
+  
   for( Particle p : particles )
   {
-    if( !p.isDead() )
-    {
-      p.display();
-    }
-  }  
+    p.display();
+  } 
 }
