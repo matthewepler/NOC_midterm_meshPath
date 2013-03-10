@@ -16,7 +16,7 @@ void setup()
   size( 1000, 400 );
   
   physics = new VerletPhysics2D();
-  physics.addBehavior( new GravityBehavior( new Vec2D( 0.15, 0 ) ) );
+  physics.addBehavior( new GravityBehavior( new Vec2D( -0.01, 0 ) ) );
   
   particles = new ArrayList();
   
@@ -45,7 +45,7 @@ void setup()
        Particle thatParticle = particles.get( j );
        if( dist( thisParticle.x, thisParticle.y, thatParticle.x, thatParticle.y ) < stringRadius ) 
        {
-         VerletSpring2D spring = new VerletSpring2D( thisParticle, thatParticle, 80, 0.01 ); 
+         VerletSpring2D spring = new VerletSpring2D( thisParticle, thatParticle, 100, 0.01 ); 
          physics.addSpring( spring );
        }
      }
@@ -56,6 +56,8 @@ void setup()
 void draw()
 {
   background( 220 );
+  
+  physics.update();
   
   for( int i = 0; i < particles.size(); i++ )
   {
