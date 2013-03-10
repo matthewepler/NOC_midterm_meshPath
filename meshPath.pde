@@ -10,14 +10,14 @@ VerletPhysics2D physics;
 ArrayList<Particle> particles;
 Attractor attractor;
 
-float stringRadius = 75;
+float stringRadius = 100;
 
 void setup()
 {
   size( 1000, 400 );
   
   physics = new VerletPhysics2D();
-  physics.addBehavior( new GravityBehavior( new Vec2D( -0.01, 0 ) ) );
+  physics.addBehavior( new GravityBehavior( new Vec2D( -0.006, 0 ) ) );
   physics.setDrag (0.01);
   
   particles = new ArrayList();
@@ -27,12 +27,6 @@ void setup()
   Vec2D extent = new Vec2D( width/2, height/2 );
   
   physics.setWorldBounds( Rect.fromCenterExtent( center, extent ) );
-  
-  for( int i = 0; i < width; i+=25 )
-  {
-    Particle p = new Particle( i, height/2 + random( -50, 50 ) );
-    particles.add( p ); 
-  }
 }
 
 void draw()
@@ -42,6 +36,12 @@ void draw()
   physics.update();
   attractor.x = mouseX;
   attractor.y = mouseY;
+  
+  if( mousePressed && frameCount % 2 == 0 )
+  {
+    Particle p = new Particle( mouseX + random( -stringRadius / 3, stringRadius / 3 ), mouseY + random( -stringRadius / 3, stringRadius / 3 ) );
+    particles.add( p );
+  }
   
   for( int i = 0; i < particles.size(); i++ )
   {
@@ -53,6 +53,7 @@ void draw()
         Particle thatParticle = particles.get( j );
         if( dist( thisParticle.x, thisParticle.y, thatParticle.x, thatParticle.y ) < stringRadius ) 
         {
+          fill( 0, thisParticle.alpha );
           line( thisParticle.x, thisParticle.y, thatParticle.x, thatParticle.y );
         }
       }  
