@@ -23,11 +23,14 @@ void setup()
   
   physics.setWorldBounds( Rect.fromCenterExtent( center, extent ) );
   
+  noiseDetail( 1, 0.99 );
+  float xoff = 0.0;
   for( int i = 0; i < width; i+=25 )
   {
-    Particle p = new Particle( i, random( height/2 - 50, height/2 + 50 ) );
+    Particle p = new Particle( i, height/2 + noise( xoff ) * 150 );
     particles.add( p ); 
     physics.addParticle( p );
+    xoff += 3;
   }
   
   for( int i = particles.size() - 2; i >= 0; i-- )
